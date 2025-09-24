@@ -1,10 +1,11 @@
 # streamlit_app.py
 import streamlit as st
-from utils.news_predictor import predict_news
+from utils.news_predictor import load_model # Ensure 'predict_news' exists in utils/news_predictor.py
 from utils.auth import login_user, register_user
-
+model=load_model("fake_news_model.pkl")
 st.set_page_config(page_title="Fake News Detector", page_icon="📰")
-
+# User input
+user_input = st.text_area("Enter news text to check:")
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
     st.session_state.user_name = ""
@@ -41,9 +42,13 @@ else:
     st.title("📰 Fake News Detection")
     headline = st.text_area("📝 Enter News Text", height=100)
 
-    if st.button("🔍 Detect"):
-        if headline.strip() == "":
-            st.warning("Please enter some text.")
-        else:
-            result = predict_news(headline)
-            st.success(f"🧠 Prediction: *{result} News*")
+    if st.button("Predict"):
+      if user_input.strip():
+        # Preprocess input (if your model requires vectorizer, add it here)
+        prediction = model.predict([user_input])
+        result = "✅ Real News" if prediction[0] == 1 else "❌ Fake News"
+        st.subheader(f"Result: {result}")
+      else:
+        st.warning("Please enter some text before predicting.")
+         
+# Predict button
