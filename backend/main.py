@@ -32,7 +32,7 @@ async def predict_news(news: NewsInput):
     lang = detect(raw_text)
 
     if lang != 'en':
-        translated_obj = await translator.translate(raw_text, dest='en')
+        translated_obj = translator.translate(raw_text, dest='en')
         translated = translated_obj.text
     else:
         translated = raw_text

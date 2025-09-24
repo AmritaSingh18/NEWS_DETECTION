@@ -1,4 +1,7 @@
 {
-    "python-envs.defaultEnvManager": "ms-python.python:system",
-    "python-envs.pythonProjects": []
+    "python-envs.defaultEnvManager": "ms-python.python:venv",
+    "python-envs.pythonProjects": [],
+    "graalvm.home": "c:\\Users\\amrit\\Desktop\\graalvm-jdk-24.0.2+11.1",
+    "java.home": "c:\\Users\\amrit\\Desktop\\graalvm-jdk-24.0.2+11.1",
+    "python-envs.defaultPackageManager": "ms-python.python:pip"
 }
