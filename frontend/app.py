@@ -1,6 +1,6 @@
 # streamlit_app.py
 import streamlit as st
-from news_predictor import predict_news
+from utils.news_predictor import predict_news
 from utils.auth import login_user, register_user
 
 st.set_page_config(page_title="Fake News Detector", page_icon="📰")
