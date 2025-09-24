@@ -27,18 +27,22 @@ class NewsInput(BaseModel):
     text: str
 
 @app.post("/predict")
-def predict_news(news: NewsInput):
+async def predict_news(news: NewsInput):
     raw_text = news.text
     lang = detect(raw_text)
 
-    translated = translator.translate(raw_text, dest='en').text if lang != 'en' else raw_text
+    if lang != 'en':
+        translated_obj = await translator.translate(raw_text, dest='en')
+        translated = translated_obj.text
+    else:
+        translated = raw_text
 
     X = vectorizer.transform([translated])
     y_pred = model.predict(X)[0]
     y_prob = model.predict_proba(X)[0][y_pred]
 
     keywords = keyword_model.extract_keywords(translated, top_n=3)
-    top_kw = [k[0] for k in keywords if k[1] > 0.3]
+    top_kw = [k[0] for k in keywords if isinstance(k, tuple) and len(k) > 1 and k[1] > 0.3]
     related_news = []
 
     if y_pred == 1 and top_kw:

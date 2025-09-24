@@ -1,7 +1,9 @@
-from langdetect import detect
+import yaml
 
-def detect_language(text):
-    try:
-        return detect(text)
-    except:
-        return "unknown"
+def check_login(username, password):
+    with open("config.yaml") as f:
+        config = yaml.safe_load(f)
+    for user in config["users"]:
+        if user["username"] == username and user["password"] == password:
+            return True
+    return False
