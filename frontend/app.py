@@ -50,5 +50,3 @@ else:
         st.subheader(f"Result: {result}")
       else:
         st.warning("Please enter some text before predicting.")
-         
-# Predict button
